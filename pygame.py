@@ -16,5 +16,7 @@ y_pos = 0
 
 #creating a screen using a tuple
 gameDisplay = pygame.display.set_mode((800,600))
-#Naming the screen that is created
+#Naming the screen that igits created
 pygame.display.set_caption("Sabine's Pygame Example")
+#Close the screen using a tuple
+
