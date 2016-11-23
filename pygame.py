@@ -19,4 +19,7 @@ gameDisplay = pygame.display.set_mode((800,600))
 #Naming the screen that appears to 
 pygame.display.set_caption("Sabine's Pygame Example")
 #Close the screen using a tuple
-
+mouse.set_visible(False)
+lilo = Lilo()
+food = Food()
+sprites = RenderPlain(lilo, food)
