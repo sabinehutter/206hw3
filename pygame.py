@@ -1,7 +1,8 @@
 #Due December 2
 import pygame
 from pygame import *
-from pygame.sprite import *
+import os, sys
+from pygame.locals import *
 from random import *
 
 DELAY = 1000;
