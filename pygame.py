@@ -20,7 +20,7 @@ y_pos = 0
 
 
 #Naming the screen that appears to 
-pygame.display.set_caption("Sabine's Pygame Example")
+pygame.display.set_caption("Sabine's Pygame Stacker Game")
 #Close the screen using a tuple
 
 class Flower(Sprite):
