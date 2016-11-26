@@ -1,9 +1,6 @@
 #Due December 2
-import pygame
-from pygame import *
 import os, sys
-from pygame.locals import *
-from random import *
+import pygame
 
 DELAY = 1000;
 #creating initial colors
@@ -20,7 +17,7 @@ y_pos = 0
 
 
 #Naming the screen that appears to 
-pygame.display.set_caption("Sabine's Pygame Stacker Game")
+#pygame.display.set_caption("Sabine's Pygame Stacker Game")
 #Close the screen using a tuple
 
 class Flower(Sprite):
