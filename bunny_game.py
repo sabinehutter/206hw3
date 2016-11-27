@@ -3,6 +3,7 @@ from pygame import *
 from pygame.sprite import *
 import pygame
 import random
+import os, sys
 
 
 DELAY = 1000;
@@ -14,6 +15,15 @@ green = (0, 255, 0)
 blue = (0, 0, 255)
 pink = (255, 153, 204)
 
+def load_image(name, colorkey=None):
+	fullname = os.path.join('pygame_hw', 'images')
+	fullname = os.path.join(fullname, name)
+	image = image.convert()
+	if colorkey is not None:
+		if colorkey is -1:
+			colorkey = iage.get_at((0,0))
+		image.set_colorkey(colorkey, RLEACCEL)
+	return image, image.get_react()
 
 class Pygame_main:
 
@@ -25,7 +35,7 @@ class Pygame_main:
 		self.name = pygame.display.set_caption("Sabine's Pygame Stacker Game")
 
 	def Main_game(self):
-		self.LoadSprites();
+		self.Init_sprites();
 		pygame.key.set_repeat(500, 30)
 		self.background = pygame.Surface(self.screen.get_size())
 		self.background = self.background.convert()
@@ -69,43 +79,45 @@ class Pygame_main:
 		for x in range(nNumHorizontal):
 			for y in range(nNumVertical):
 				self.pellet_sprites.add(Pellet(pygame.Rect(x*64, y*64, 64, 64)))
-	class Snake(pygame.sprite.Sprite):
+class Snake(pygame.sprite.Sprite):
 
-		def __init__(self):
-			pygame.sprite.Sprite.__init__(self)
-			self.image, self.react = load_image('bunny.png',-1)
-			self.pellets = 0
+	def __init__(self):
+		pygame.sprite.Sprite.__init__(self)
+		self.image = image.load('bunny.png').convert_alpha()
+		self.rect = self.image.get_rect()
+		self.pellets = 0
 
-			self.x_dist = 2
-			self.y_dist = 2
+		self.x_dist = 2
+		self.y_dist = 2
 
-		def movement(self, key):
+	def movement(self, key):
 
-			xMove = 0;
-			yMove = 0;
+		xMove = 0;
+		yMove = 0;
         
-			if (key == K_RIGHT):
-				xMove = self.x_dist
-			elif (key == K_LEFT):
-				xMove = -self.x_dist
-			elif (key == K_UP):
-				yMove = -self.y_dist
-			elif (key == K_DOWN):
-				yMove = self.y_dist
+		if (key == K_RIGHT):
+			xMove = self.x_dist
+		elif (key == K_LEFT):
+			xMove = -self.x_dist
+		elif (key == K_UP):
+			yMove = -self.y_dist
+		elif (key == K_DOWN):
+			yMove = self.y_dist
 
 			self.rect.move_ip(xMove,yMove);
 
-	class Pellet(pygame.sprite.Sprite):
+class Pellet(pygame.sprite.Sprite):
 
-		def __init__(self, react = None):
-			pygame.sprite.Sprite.__init__(self)
-			self.image, self.react = load_image('carrot.png', -1)
-			if rect != None:
-				self.rect = rect
+	def __init__(self, react = None):
+		pygame.sprite.Sprite.__init__(self)
+		self.image = image.load('carrot.png').convert_alpha()
+		self.rect = self.image.get_rect()
+		if rect != None:
+			self.rect = rect
 
 if __name__ == "__main__":
-	MainWindow = PyManMain()
-	MainWindow.MainLoop()
+	MainWindow = Pygame_main()
+	MainWindow.Main_game()
 
 
 
