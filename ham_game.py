@@ -42,6 +42,13 @@ class Patty(Sprite):
 	def move(self, action):
 		if action == "dropping":
 			self.react.y += pattyspeed
+			if self.rect.y < Height:
+				self.rect.x = random.randint(1, WIDTH -20)
+				self.rect.y = (random.randint(0, HEIGHT -30))*(-1)
+
+			elif action == "top":
+				self.rect.x = random.randint(1, WIDTH -20)
+				self.rect.y = (random.randint(0, HEIGHT -30))*(-1)
 
 
 class Cheese(Sprite):
@@ -62,20 +69,9 @@ class Bun(Sprite):
 		self.image = image.load("bun.bmp").convert()
 		self.rect = self.image.get_rect()
 
-	def move(self, key):
+	def update(self, key):
 		x_move = 0;
 		y_move = 0;
-
-		if (key == K_RIGHT):
-			x_move = self.x_dist
-		elif (key == K_LEFT):
-			x_move = -self.x_dist
-		elif (key == K_UP):
-			y_move = -self.y_dist
-		elif (key == K_DOWN):
-			y_move = self.y_dist
-
-		self.rect.move_ip(x_move, y_move);
 
 
 
@@ -97,5 +93,17 @@ while not gameExit:
 	for event in pygame.event.get():
 		if event.type == pygame.QUIT:
 			gameExit = True
+
+	if event.type == pygame.KEYDOWN:
+		x_delta=0;
+		y_delta=0;
+		if event.key == pygame.K_LEFT:
+			x_delta -= 10
+		if event.key == pygame.K_RIGHT:
+			x_delta += 10
+		if event.key == pygame.K_UP:
+			y_delta -= 10
+		if event.key == pygame.K_DOWN:
+			y_delta += 10
 
 	pygame.display.update()
