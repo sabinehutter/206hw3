@@ -25,8 +25,8 @@ bunspeed = 5
 # mute = False
 
 height_of_screen = 800
-x_position = 0
-y_position = 0
+x_position = 520
+y_position = 355
 
 clock = pygame.time.Clock()
 
@@ -36,19 +36,28 @@ clock = pygame.time.Clock()
 class Patty(Sprite):
 	def __init__(self):
 		Sprite.__init__(self)
-		self.image = image.load("beef.patty.bmp").convert_alpha()
-		self.rect = self.image.get_react()
+		self.image = image.load("beef.patty.png").convert_alpha()
+		self.rect = self.image.get_rect()
 
-	def move(self, action):
-		if action == "dropping":
-			self.react.y += pattyspeed
-			if self.rect.y < Height:
-				self.rect.x = random.randint(1, WIDTH -20)
-				self.rect.y = (random.randint(0, HEIGHT -30))*(-1)
+	def back_to_top(self):
+		self.rect.y = random.randrange(-300, -20)
+		self.rect.x = random.randrange(0, Height)
 
-			elif action == "top":
-				self.rect.x = random.randint(1, WIDTH -20)
-				self.rect.y = (random.randint(0, HEIGHT -30))*(-1)
+	def update(self):
+		self.rect.y += 3
+		if self.rect.y > 610:
+			self.back_to_top()
+
+	 # def move(self, action):
+	# 	if action == "dropping":
+	# 		self.react.y += pattyspeed
+	# 		if self.rect.y < Height:
+	# 			self.rect.x = random.randint(1, WIDTH -20)
+	# 			self.rect.y = (random.randint(0, HEIGHT -30))*(-1)
+
+	# 		elif action == "top":
+	# 			self.rect.x = random.randint(1, WIDTH -20)
+	# 			self.rect.y = (random.randint(0, HEIGHT -30))*(-1)
 
 # class Cheese(Sprite):
 # 	def __init__(self):
@@ -66,11 +75,14 @@ class Bun(Sprite):
 	def __init__(self):
 		Sprite.__init__(self)
 		self.image = image.load("bun.png").convert_alpha()
-		self.rect.center = (pygame.transform.scale(self.image, (1280, 720)))
 		self.rect = self.image.get_rect()
 
 	def update(self):
 		self.rect.x = x_position
+		self.rect.y = y_position
+
+	def hit(self, target):
+		return self.rect.colliderect(target)
 
 
 
@@ -81,10 +93,11 @@ screen = gameDisplay
 display.set_caption("Sabine's Pygame Hamburger Game")
 
 f = font.Font(None, 25)
-
+patty = Patty()
 bun = Bun()
-sprites = RenderPlain(bun)
+sprites = RenderPlain(bun, patty)
 
+hits = 0
 
 
 gameExit = False
@@ -94,17 +107,22 @@ while not gameExit:
 			gameExit = True
 
 	if event.type == pygame.KEYDOWN:
-		y_position = 450;
 		if event.key == pygame.K_LEFT or event.key == pygame.K_a:
 			x_position -= bunspeed
 		if event.key == pygame.K_RIGHT or event.key == pygame.K_d:
 			x_position += bunspeed
 
+		elif bun.hit(patty):
+			hits += 1
+
+
+
 
 	screen.fill(white)
-	t = f.render("Score = " + str(5), False, (0,0,0))
-    # t = f.render("Score = " + str(hits), False, (0,0,0))
-	# screen.blit(t, (320, 0))
+	t = f.render("Score = " + str(hits), False, (0,0,0))
+	screen.blit(t, (320, 0))
+	patty.update()
+	#patty.draw()
 	sprites.update()
 	sprites.draw(screen)
 	display.update()
