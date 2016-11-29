@@ -19,7 +19,7 @@ blue = (0, 0, 255)
 pink = (255, 153, 204)
 
 pattyspeed = 10
-
+bunspeed = 5
 
 # paused = False
 # mute = False
@@ -36,7 +36,7 @@ clock = pygame.time.Clock()
 class Patty(Sprite):
 	def __init__(self):
 		Sprite.__init__(self)
-		self.image = image.load("beef.patty.bmp").convert()
+		self.image = image.load("beef.patty.bmp").convert_alpha()
 		self.rect = self.image.get_react()
 
 	def move(self, action):
@@ -51,33 +51,36 @@ class Patty(Sprite):
 				self.rect.y = (random.randint(0, HEIGHT -30))*(-1)
 
 
-class Cheese(Sprite):
-	def __init__(self):
-		Sprite.__init__(self)
-		self.image = image.load("cheese.bmp").convert()
-		self.rect = self.image.get_rect()
+# class Cheese(Sprite):
+# 	def __init__(self):
+# 		Sprite.__init__(self)
+# 		self.image = image.load("cheese.bmp").convert()
+# 		self.rect = self.image.get_rect()
 
-class Tomato(Sprite):
-	def __init__(self):
-		Sprite.__init__(self)
-		self.image = image.load("tomato.bmp").convert()
-		self.rect = self.image.get_rect()
+# class Tomato(Sprite):
+# 	def __init__(self):
+# 		Sprite.__init__(self)
+# 		self.image = image.load("tomato.bmp").convert()
+# 		self.rect = self.image.get_rect()
 
 class Bun(Sprite):
 	def __init__(self):
 		Sprite.__init__(self)
-		self.image = image.load("bun.bmp").convert()
+		self.image = image.load("bun.png").convert_alpha()
 		self.rect = self.image.get_rect()
+		self.rect.center = (pygame.transform.scale()
 
-	def update(self, key):
-		x_move = 0;
-		y_move = 0;
+	def update(self):
+		self.rect.x = x_position
+
+#	def update(self, )
 
 
 
 init()
 
 gameDisplay = display.set_mode((Width, Height))
+screen = gameDisplay
 display.set_caption("Sabine's Pygame Hamburger Game")
 
 f = font.Font(None, 25)
@@ -95,15 +98,16 @@ while not gameExit:
 			gameExit = True
 
 	if event.type == pygame.KEYDOWN:
-		x_delta=0;
-		y_delta=0;
-		if event.key == pygame.K_LEFT:
-			x_delta -= 10
-		if event.key == pygame.K_RIGHT:
-			x_delta += 10
-		if event.key == pygame.K_UP:
-			y_delta -= 10
-		if event.key == pygame.K_DOWN:
-			y_delta += 10
+		y_position = 450;
+		if event.key == pygame.K_LEFT or event.key == pygame.K_a:
+			x_position -= bunspeed
+		if event.key == pygame.K_RIGHT or event.key == pygame.K_d:
+			x_position += bunspeed
 
-	pygame.display.update()
+	screen.fill(white)
+	t = f.render("Score = " + str(5), False, (0,0,0))
+    # t = f.render("Score = " + str(hits), False, (0,0,0))
+	# screen.blit(t, (320, 0))
+	sprites.update()
+	sprites.draw(screen)
+	display.update()
