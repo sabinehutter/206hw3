@@ -50,7 +50,6 @@ class Patty(Sprite):
 				self.rect.x = random.randint(1, WIDTH -20)
 				self.rect.y = (random.randint(0, HEIGHT -30))*(-1)
 
-
 # class Cheese(Sprite):
 # 	def __init__(self):
 # 		Sprite.__init__(self)
@@ -67,13 +66,11 @@ class Bun(Sprite):
 	def __init__(self):
 		Sprite.__init__(self)
 		self.image = image.load("bun.png").convert_alpha()
+		self.rect.center = (pygame.transform.scale(self.image, (1280, 720)))
 		self.rect = self.image.get_rect()
-		self.rect.center = (pygame.transform.scale()
 
 	def update(self):
 		self.rect.x = x_position
-
-#	def update(self, )
 
 
 
@@ -86,7 +83,6 @@ display.set_caption("Sabine's Pygame Hamburger Game")
 f = font.Font(None, 25)
 
 bun = Bun()
-
 sprites = RenderPlain(bun)
 
 
@@ -103,6 +99,7 @@ while not gameExit:
 			x_position -= bunspeed
 		if event.key == pygame.K_RIGHT or event.key == pygame.K_d:
 			x_position += bunspeed
+
 
 	screen.fill(white)
 	t = f.render("Score = " + str(5), False, (0,0,0))
