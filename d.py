@@ -76,24 +76,35 @@ class Bun(Sprite):
 		Sprite.__init__(self)
 		self.image = image.load("bun.png").convert_alpha()
 		self.rect = self.image.get_rect()
+		screen = pygame.display.get_surface()
+		self.area = screen.get_rect()
+		self.speed = 10
+		self.state = "still"
+		self.reinit()
 
-	def update(self, x = 800):
-		self.rect.x = x_position
-		self.rect.y = y_position
-		# if self.rect.x = 500:
-		# 	self.rect.left = 500
-		# elif self.rect.right + x > 200:
-		# 	self.rect.right = 200
-		# else:
-		# 	self.rect.move_ip((x,y))
+	def reinit():
+		self.state = "still"
+		self.movepos = [400, 600]
+
+	def update(self):
+		newpos = self.rect.move(self.movepos)
+		if self.area.contains(newpos):
+			self.rect = newpos
+		pygame.event.pump()
+
+	def moveleft(self):
+		self.movepos[0] = self.movepos[0] - (self.speed)
+		self.state = "move left"
+
+	def moveright(self):
+		self.movepos[0] = self.movepos[0] + (self.speed)
+		self.state = "move right"
 
 	def hit(self, target):
 		return self.rect.colliderect(target)
 
+
 			
-
-
-
 init()
 
 gameDisplay = display.set_mode((Width, Height))
